@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, ScrollView} from 'react-native';
+import {Text, View, ScrollView} from 'react-native';
 import BaseHeader from '../../components/common/BaseHeader';
 import NoteCard from '../../components/Home/NoteCard';
 import Fab from '../../components/Home/Fab';
@@ -90,22 +90,30 @@ const cardTypes = [
 ];
 let iterator = 0;
 
-const Home = (props) => {
+const Home = ({navigation, route}) => {
+  const toggleThemeByRoute = () => {
+    navigation.setParams({
+      theme: 'hey',
+    });
+    route.params.toggleTheme.bind(this);
+  };
+
   return (
     <View
       style={[
         HomeStyles.wrapper,
-        {backgroundColor: getColorByTheme(props.theme)},
+        {backgroundColor: getColorByTheme(route.params.theme)},
       ]}>
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
-        indicatorStyle={getColorByTheme(props.theme, 'scrollIndicator')}>
+        indicatorStyle={getColorByTheme(route.params.theme, 'scrollIndicator')}>
         <BaseHeader
-          theme={props.theme}
-          toggleTheme={props.toggleTheme.bind(this)}
+          theme={route.params.theme}
+          toggleTheme={toggleThemeByRoute}
         />
 
         <View style={HomeStyles.cardsContainer}>
+          <Text>{route.params.theme}</Text>
           {TestNotes.map((note, index) => {
             note.cardType = cardTypes[iterator];
             iterator++;

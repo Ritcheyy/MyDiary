@@ -14,8 +14,7 @@ const BaseHeaderStyles = StyleSheet.create({
   },
   title: {
     fontSize: perfectSize(32),
-    fontFamily: 'TTNorms-Regular',
-    fontWeight: '500',
+    fontFamily: 'TTNorms-Medium',
   },
   searchBtn: {
     width: perfectSize(43),

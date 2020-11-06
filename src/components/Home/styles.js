@@ -7,6 +7,7 @@ const ScreenHeight = Dimensions.get('window').height;
 const HomeStyles = StyleSheet.create({
   wrapper: {
     height: ScreenHeight,
+    flex: 1,
   },
 
   cardsContainer: {
@@ -79,7 +80,7 @@ const NoteCardStyles = StyleSheet.create({
     position: 'absolute',
     right: perfectSize(20),
     bottom: perfectSize(20),
-    fontWeight: '500',
+    fontFamily: 'TTNorms-Medium',
     letterSpacing: -0.5,
   },
 
@@ -116,7 +117,7 @@ const NoteCardStyles = StyleSheet.create({
   title: {
     fontSize: perfectSize(18),
     color: Colors.black,
-    fontWeight: '500',
+    fontFamily: 'TTNorms-Medium',
     letterSpacing: -0.5,
   },
 
@@ -126,7 +127,7 @@ const NoteCardStyles = StyleSheet.create({
     position: 'absolute',
     left: perfectSize(20),
     bottom: perfectSize(20),
-    fontWeight: '500',
+    fontFamily: 'TTNorms-Medium',
     letterSpacing: -0.5,
   },
 });
