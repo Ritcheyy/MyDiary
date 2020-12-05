@@ -7,7 +7,8 @@ import {enableScreens} from 'react-native-screens';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from 'react-native-screens/native-stack';
 
-import Home from './src/screens/Home/index';
+import * as Screens from './src/screens';
+
 import {setCustomText} from 'react-native-global-props';
 import {CustomTextProps} from './src/assets/styles/GlobalStyles';
 import {getColorByTheme} from './src/assets/styles/Theme';
@@ -16,7 +17,7 @@ setCustomText(CustomTextProps);
 EStyleSheet.build();
 
 enableScreens();
-const Stack = createNativeStackNavigator();
+const {Navigator, Screen} = createNativeStackNavigator();
 
 class App extends React.Component {
   constructor(props) {
@@ -64,10 +65,13 @@ class App extends React.Component {
           backgroundColor={getColorByTheme(this.state.theme)}
           barStyle={getColorByTheme(this.state.theme, 'statusBar')}
         />
-        <Stack.Navigator>
-          <Stack.Screen
+        <Navigator
+          screenOptions={{
+            headerShown: false,
+          }}>
+          <Screen
             name="Home"
-            component={Home}
+            component={Screens.Home}
             initialParams={{
               theme: this.state.theme,
               toggleTheme: this.toggleTheme.bind(this),
@@ -81,7 +85,8 @@ class App extends React.Component {
             // }
             //})}
           />
-        </Stack.Navigator>
+          <Screen name="NoteView" component={Screens.NoteView} />
+        </Navigator>
       </NavigationContainer>
     );
   }

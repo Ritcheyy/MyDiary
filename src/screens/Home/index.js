@@ -98,6 +98,10 @@ const Home = ({navigation, route}) => {
     route.params.toggleTheme.bind(this);
   };
 
+  const handleNoteView = (note) => {
+    navigation.navigate('NoteView', {note});
+  };
+
   return (
     <View
       style={[
@@ -113,14 +117,15 @@ const Home = ({navigation, route}) => {
         />
 
         <View style={HomeStyles.cardsContainer}>
-          <Text>{route.params.theme}</Text>
           {TestNotes.map((note, index) => {
             note.cardType = cardTypes[iterator];
             iterator++;
             if (iterator === cardTypes.length) {
               iterator = 0;
             }
-            return <NoteCard note={note} key={note.id} />;
+            return (
+              <NoteCard note={note} key={note.id} viewNote={handleNoteView} />
+            );
           })}
         </View>
       </ScrollView>

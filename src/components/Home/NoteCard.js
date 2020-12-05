@@ -1,33 +1,33 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 import {NoteCardStyles} from './styles';
 
-const NoteCard = (props) => {
+const NoteCard = ({note, viewNote}) => {
   return (
     <>
-      <View
-        style={[NoteCardStyles.noteCard, NoteCardStyles[props.note.cardType]]}>
+      <TouchableOpacity
+        onPress={() => viewNote(note)}
+        style={[NoteCardStyles.noteCard, NoteCardStyles[note.cardType]]}>
         <Text
           numberOfLines={20}
           style={[
             NoteCardStyles.title,
-            props.note.cardType === 'wide' ? NoteCardStyles.wideTitle : '',
-            props.note.cardType === 'rightLong' ||
-            props.note.cardType === 'leftLong'
+            note.cardType === 'wide' ? NoteCardStyles.wideTitle : '',
+            note.cardType === 'rightLong' || note.cardType === 'leftLong'
               ? NoteCardStyles.longCardTitle
               : '',
           ]}>
-          {props.note.title}
+          {note.title}
         </Text>
         <Text
           style={
-            props.note.cardType === 'wide'
+            note.cardType === 'wide'
               ? NoteCardStyles.wideDate
               : NoteCardStyles.date
           }>
-          {props.note.date}
+          {note.date}
         </Text>
-      </View>
+      </TouchableOpacity>
     </>
   );
 };
