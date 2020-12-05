@@ -1,10 +1,23 @@
 import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
-import {BaseHeaderStyles} from '../common/styles';
+import {BaseHeaderStyles} from './styles';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {getColorByTheme} from '../../assets/styles/Theme';
+import {connect} from 'react-redux';
+import {CHANGE_THEME} from '../../redux/actionTypes';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const BaseHeader = (props) => {
+  const handleThemeToggle = () => {
+    let newTheme = props.theme === 'dark' ? 'light' : 'dark';
+    props.toggleTheme(newTheme);
+    try {
+      AsyncStorage.setItem('@theme', newTheme);
+    } catch (e) {
+      // saving error
+    }
+  };
+
   return (
     <View style={BaseHeaderStyles.wrapper}>
       <Text
@@ -16,8 +29,8 @@ const BaseHeader = (props) => {
       </Text>
 
       <TouchableOpacity
-        style={BaseHeaderStyles.searchBtn}
-        onPress={() => props.toggleTheme()}>
+        style={BaseHeaderStyles.toggleBtn}
+        onPress={handleThemeToggle}>
         <Icon
           name="moon"
           size={22}
@@ -29,4 +42,14 @@ const BaseHeader = (props) => {
   );
 };
 
-export default BaseHeader;
+const mapStateToProps = (state) => ({theme: state.themeReducer.theme});
+const mapDispatchToProps = (dispatch) => ({
+  toggleTheme: (theme) =>
+    dispatch({
+      type: CHANGE_THEME,
+      payload: {
+        theme,
+      },
+    }),
+});
+export default connect(mapStateToProps, mapDispatchToProps)(BaseHeader);

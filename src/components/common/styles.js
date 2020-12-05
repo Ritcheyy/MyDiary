@@ -16,7 +16,7 @@ const BaseHeaderStyles = StyleSheet.create({
     fontSize: perfectSize(32),
     fontFamily: 'TTNorms-Medium',
   },
-  searchBtn: {
+  toggleBtn: {
     width: perfectSize(43),
     height: perfectSize(43),
     backgroundColor: Colors.gray,

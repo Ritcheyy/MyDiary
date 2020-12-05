@@ -6,7 +6,7 @@ const NoteCard = ({note, viewNote}) => {
   return (
     <>
       <TouchableOpacity
-        onPress={() => viewNote(note)}
+        onPress={() => viewNote(note.id)}
         style={[NoteCardStyles.noteCard, NoteCardStyles[note.cardType]]}>
         <Text
           numberOfLines={20}

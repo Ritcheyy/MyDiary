@@ -1,24 +1,28 @@
 import React from 'react';
 import {View, Text} from 'react-native';
+import {connect} from 'react-redux';
 
-const NoteView = ({route}) => {
+const NoteView = ({route, notes}) => {
+  const note = notes.find((item) => item.id === route.params.id);
   return (
     <View
       style={{
         position: 'absolute',
         top: '50%',
-        right: 0,
+        left: '1%',
       }}>
       <Text
         style={{
           color: '#000',
           fontSize: 20,
         }}>
-        This is note: {route.params.note.id} with title:
-        {route.params.note.title}
+        This is note: {route.params.id} with title:
+        {note.title}
       </Text>
     </View>
   );
 };
 
-export default NoteView;
+const mapStateToProps = (state) => ({notes: state.noteReducer.notes});
+
+export default connect(mapStateToProps)(NoteView);
