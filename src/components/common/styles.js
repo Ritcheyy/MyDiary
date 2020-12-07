@@ -16,13 +16,18 @@ const BaseHeaderStyles = StyleSheet.create({
     fontSize: perfectSize(32),
     fontFamily: 'TTNorms-Medium',
   },
-  toggleBtn: {
+  headerBtn: {
     width: perfectSize(43),
     height: perfectSize(43),
     backgroundColor: Colors.gray,
     borderRadius: perfectSize(12),
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  editIcon: {
+    top: perfectSize(12),
+    right: perfectSize(10),
+    position: 'absolute',
   },
 });
 
