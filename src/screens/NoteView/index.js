@@ -1,18 +1,33 @@
-import React from 'react';
-import {View, Text, ScrollView} from 'react-native';
+import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
+import {View, Text, TextInput} from 'react-native';
+import InputScrollView from 'react-native-input-scroll-view';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import BaseHeader from '../../components/common/BaseHeader';
 import {NoteViewStyles} from '../../components/NoteView/styles';
 import {getColorByTheme} from '../../assets/styles/Theme';
-import BaseHeader from '../../components/common/BaseHeader';
-import {SafeAreaView} from 'react-native-safe-area-context';
 
 const NoteView = ({route, navigation, notes, theme}) => {
   const demoNote =
     'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aspernatur commodi corporis dicta doloremque impedit in inventore laudantium magni, natus neque nobis nulla obcaecati officia pariatur possimus quos reprehenderit vel? \n\n Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aspernatur commodi corporis dicta doloremque impedit in inventore laudantium magni, natus neque nobis nulla obcaecati officia pariatur possimus quos reprehenderit vel? \n\n Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aspernatur commodi corporis dicta doloremque impedit in inventore laudantium magni, natus neque nobis nulla obcaecati officia pariatur possimus quos reprehenderit vel? \n\n Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aspernatur commodi corporis dicta doloremque impedit in inventore laudantium magni, natus neque nobis nulla obcaecati officia pariatur possimus quos reprehenderit vel?';
 
   const note = notes.find((item) => item.id === route.params.id);
+  let titleInput = null;
+  let noteInput = null;
+  const [editMode, setEditMode] = useState(false);
+
+  useEffect(() => {
+    if (editMode) {
+      noteInput.focus();
+    }
+  });
+
   const handleGoBack = () => {
     return navigation.goBack();
+  };
+
+  const toggleEditMode = () => {
+    setEditMode(!editMode);
   };
 
   return (
@@ -22,30 +37,46 @@ const NoteView = ({route, navigation, notes, theme}) => {
         {backgroundColor: getColorByTheme(theme)},
       ]}>
       <SafeAreaView>
-        <BaseHeader noteview={true} handleGoBack={handleGoBack} />
+        <BaseHeader
+          noteviewEditMode={editMode}
+          noteview={true}
+          toggleEditMode={() => toggleEditMode}
+          handleGoBack={handleGoBack}
+        />
       </SafeAreaView>
 
-      <ScrollView
+      <InputScrollView
         contentInsetAdjustmentBehavior="automatic"
         indicatorStyle={getColorByTheme(theme, 'scrollIndicator')}>
         <View style={NoteViewStyles.content}>
-          <Text
+          <TextInput
+            editable={editMode}
+            multiline
+            maxLength={64}
+            ref={(input) => {
+              titleInput = input;
+            }}
             style={[
               NoteViewStyles.noteTitle,
               {color: getColorByTheme(theme, 'text')},
             ]}>
             {note.title}
-          </Text>
+          </TextInput>
           <Text style={NoteViewStyles.noteDate}>{note.date}</Text>
-          <Text
+          <TextInput
+            editable={editMode}
+            multiline
+            ref={(input) => {
+              noteInput = input;
+            }}
             style={[
               NoteViewStyles.noteText,
               {color: getColorByTheme(theme, 'text')},
             ]}>
             {demoNote}
-          </Text>
+          </TextInput>
         </View>
-      </ScrollView>
+      </InputScrollView>
     </View>
   );
 };

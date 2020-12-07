@@ -50,13 +50,19 @@ const BaseHeader = (props) => {
           <Icon name="moon" size={22} color="#FFF" solid={isDarkTheme} />
         </TouchableOpacity>
       ) : (
-        <TouchableOpacity style={BaseHeaderStyles.headerBtn}>
-          <Icon
-            name="edit"
-            size={18}
-            color="#FFF"
-            style={BaseHeaderStyles.editIcon}
-          />
+        <TouchableOpacity
+          style={BaseHeaderStyles.headerBtn}
+          onPress={props.toggleEditMode()}>
+          {props.noteviewEditMode ? (
+            <Icon name="check-circle" size={22} color="#FFF" solid={true} />
+          ) : (
+            <Icon
+              name="edit"
+              size={18}
+              color="#FFF"
+              style={BaseHeaderStyles.editIcon}
+            />
+          )}
         </TouchableOpacity>
       )}
     </View>

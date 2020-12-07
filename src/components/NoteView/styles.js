@@ -12,7 +12,7 @@ const NoteViewStyles = StyleSheet.create({
   content: {
     paddingLeft: perfectSize(23),
     paddingRight: perfectSize(23),
-    marginTop: perfectSize(10),
+    marginTop: perfectSize(8),
   },
   noteTitle: {
     fontFamily: 'TTNorms-Bold',
@@ -22,7 +22,7 @@ const NoteViewStyles = StyleSheet.create({
   },
   noteDate: {
     marginTop: perfectSize(30),
-    marginBottom: perfectSize(26),
+    marginBottom: perfectSize(20),
     fontSize: perfectSize(16),
     fontFamily: 'TTNorms-Medium',
     color: '#929292',
@@ -32,6 +32,7 @@ const NoteViewStyles = StyleSheet.create({
     color: Colors.white,
     fontSize: perfectSize(16),
     lineHeight: perfectSize(30),
+    paddingBottom: perfectSize(100),
   },
 });
 
