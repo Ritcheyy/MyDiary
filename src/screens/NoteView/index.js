@@ -26,9 +26,21 @@ const NoteView = ({route, navigation, notes, theme}) => {
         <BaseHeader noteview={true} handleGoBack={handleGoBack} />
 
         <View style={NoteViewStyles.content}>
-          <Text style={NoteViewStyles.noteTitle}>{note.title}</Text>
+          <Text
+            style={[
+              NoteViewStyles.noteTitle,
+              {color: getColorByTheme(theme, 'text')},
+            ]}>
+            {note.title}
+          </Text>
           <Text style={NoteViewStyles.noteDate}>{note.date}</Text>
-          <Text style={NoteViewStyles.noteText}>{demoNote}</Text>
+          <Text
+            style={[
+              NoteViewStyles.noteText,
+              {color: getColorByTheme(theme, 'text')},
+            ]}>
+            {demoNote}
+          </Text>
         </View>
       </ScrollView>
     </View>

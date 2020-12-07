@@ -3,7 +3,7 @@ import Colors from './Colors';
 const getColorByTheme = (currentTheme, value) => {
   let color = '';
   switch (value) {
-    case 'title':
+    case 'text':
       currentTheme === 'dark' ? (color = Colors.white) : (color = Colors.black);
       break;
     case 'statusBar':

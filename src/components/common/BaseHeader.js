@@ -24,7 +24,7 @@ const BaseHeader = (props) => {
         <Text
           style={[
             BaseHeaderStyles.title,
-            {color: getColorByTheme(props.theme, 'title')},
+            {color: getColorByTheme(props.theme, 'text')},
           ]}>
           Notes
         </Text>
