@@ -8,9 +8,19 @@ const BaseHeaderStyles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginTop: perfectSize(12),
-    marginBottom: perfectSize(22),
+    paddingBottom: perfectSize(10),
     paddingLeft: perfectSize(23),
     paddingRight: perfectSize(23),
+  },
+  elevatedWrapper: {
+    shadowColor: '#000000',
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowOpacity: 0.15,
+    shadowRadius: 3,
+    elevation: 0,
   },
   title: {
     fontSize: perfectSize(32),

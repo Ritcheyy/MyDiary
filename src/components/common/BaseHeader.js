@@ -18,8 +18,15 @@ const BaseHeader = (props) => {
     }
   };
 
+  const isDarkTheme = props.theme === 'dark';
+
   return (
-    <View style={BaseHeaderStyles.wrapper}>
+    <View
+      style={[
+        BaseHeaderStyles.wrapper,
+        props.noteview ? BaseHeaderStyles.elevatedWrapper : null,
+        {backgroundColor: getColorByTheme(props.theme)},
+      ]}>
       {!props.noteview ? (
         <Text
           style={[
@@ -32,12 +39,7 @@ const BaseHeader = (props) => {
         <TouchableOpacity
           style={BaseHeaderStyles.headerBtn}
           onPress={() => props.handleGoBack()}>
-          <Icon
-            name="angle-left"
-            size={22}
-            color="#FFF"
-            solid={props.theme === 'dark'}
-          />
+          <Icon name="angle-left" size={22} color="#FFF" />
         </TouchableOpacity>
       )}
 
@@ -45,12 +47,7 @@ const BaseHeader = (props) => {
         <TouchableOpacity
           style={BaseHeaderStyles.headerBtn}
           onPress={handleThemeToggle}>
-          <Icon
-            name="moon"
-            size={22}
-            color="#FFF"
-            solid={props.theme === 'dark'}
-          />
+          <Icon name="moon" size={22} color="#FFF" solid={isDarkTheme} />
         </TouchableOpacity>
       ) : (
         <TouchableOpacity style={BaseHeaderStyles.headerBtn}>

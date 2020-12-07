@@ -16,6 +16,7 @@ const HomeStyles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
+    marginTop: perfectSize(12),
   },
 });
 

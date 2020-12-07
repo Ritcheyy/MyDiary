@@ -4,10 +4,11 @@ import {connect} from 'react-redux';
 import {NoteViewStyles} from '../../components/NoteView/styles';
 import {getColorByTheme} from '../../assets/styles/Theme';
 import BaseHeader from '../../components/common/BaseHeader';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 const NoteView = ({route, navigation, notes, theme}) => {
   const demoNote =
-    'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aspernatur commodi corporis dicta doloremque impedit in inventore laudantium magni, natus neque nobis nulla obcaecati officia pariatur possimus quos reprehenderit vel? \n\n Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aspernatur commodi corporis dicta doloremque impedit in inventore laudantium magni, natus neque nobis nulla obcaecati officia pariatur possimus quos reprehenderit vel?';
+    'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aspernatur commodi corporis dicta doloremque impedit in inventore laudantium magni, natus neque nobis nulla obcaecati officia pariatur possimus quos reprehenderit vel? \n\n Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aspernatur commodi corporis dicta doloremque impedit in inventore laudantium magni, natus neque nobis nulla obcaecati officia pariatur possimus quos reprehenderit vel? \n\n Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aspernatur commodi corporis dicta doloremque impedit in inventore laudantium magni, natus neque nobis nulla obcaecati officia pariatur possimus quos reprehenderit vel? \n\n Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aspernatur commodi corporis dicta doloremque impedit in inventore laudantium magni, natus neque nobis nulla obcaecati officia pariatur possimus quos reprehenderit vel?';
 
   const note = notes.find((item) => item.id === route.params.id);
   const handleGoBack = () => {
@@ -20,11 +21,13 @@ const NoteView = ({route, navigation, notes, theme}) => {
         NoteViewStyles.wrapper,
         {backgroundColor: getColorByTheme(theme)},
       ]}>
+      <SafeAreaView>
+        <BaseHeader noteview={true} handleGoBack={handleGoBack} />
+      </SafeAreaView>
+
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         indicatorStyle={getColorByTheme(theme, 'scrollIndicator')}>
-        <BaseHeader noteview={true} handleGoBack={handleGoBack} />
-
         <View style={NoteViewStyles.content}>
           <Text
             style={[
