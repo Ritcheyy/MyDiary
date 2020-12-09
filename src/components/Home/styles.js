@@ -82,7 +82,6 @@ const NoteCardStyles = StyleSheet.create({
     right: perfectSize(20),
     bottom: perfectSize(20),
     fontFamily: 'TTNorms-Medium',
-    letterSpacing: -0.5,
   },
 
   leftLong: {
@@ -129,7 +128,6 @@ const NoteCardStyles = StyleSheet.create({
     left: perfectSize(20),
     bottom: perfectSize(20),
     fontFamily: 'TTNorms-Medium',
-    letterSpacing: -0.5,
   },
 });
 

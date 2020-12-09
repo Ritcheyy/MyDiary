@@ -16,6 +16,7 @@ const NoteViewStyles = StyleSheet.create({
   },
   noteTitle: {
     fontFamily: 'TTNorms-Bold',
+    fontWeight: '300',
     fontSize: perfectSize(30),
     color: Colors.white,
     lineHeight: perfectSize(36),
