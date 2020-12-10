@@ -7,10 +7,17 @@ import {connect} from 'react-redux';
 import {CHANGE_THEME} from '../../redux/actionTypes';
 import AsyncStorage from '@react-native-community/async-storage';
 
-const BaseHeader = (props) => {
+const BaseHeader = ({
+  theme,
+  headerType,
+  noteviewEditMode,
+  handleGoBack,
+  toggleTheme,
+  toggleEditMode,
+}) => {
   const handleThemeToggle = () => {
-    let newTheme = props.theme === 'dark' ? 'light' : 'dark';
-    props.toggleTheme(newTheme);
+    let newTheme = theme === 'dark' ? 'light' : 'dark';
+    toggleTheme(newTheme);
     try {
       AsyncStorage.setItem('@theme', newTheme);
     } catch (e) {
@@ -18,32 +25,32 @@ const BaseHeader = (props) => {
     }
   };
 
-  const isDarkTheme = props.theme === 'dark';
+  const isDarkTheme = theme === 'dark';
 
   return (
     <View
       style={[
         BaseHeaderStyles.wrapper,
-        props.noteview ? BaseHeaderStyles.elevatedWrapper : null,
-        {backgroundColor: getColorByTheme(props.theme)},
+        headerType === 'noteview' ? BaseHeaderStyles.elevatedWrapper : null,
+        {backgroundColor: getColorByTheme(theme)},
       ]}>
-      {!props.noteview ? (
+      {headerType === 'home' ? (
         <Text
           style={[
             BaseHeaderStyles.title,
-            {color: getColorByTheme(props.theme, 'text')},
+            {color: getColorByTheme(theme, 'text')},
           ]}>
           Notes
         </Text>
       ) : (
         <TouchableOpacity
           style={BaseHeaderStyles.headerBtn}
-          onPress={() => props.handleGoBack()}>
+          onPress={() => handleGoBack()}>
           <Icon name="angle-left" size={22} color="#FFF" />
         </TouchableOpacity>
       )}
 
-      {!props.noteview ? (
+      {headerType === 'home' ? (
         <TouchableOpacity
           style={BaseHeaderStyles.headerBtn}
           onPress={handleThemeToggle}>
@@ -52,8 +59,8 @@ const BaseHeader = (props) => {
       ) : (
         <TouchableOpacity
           style={BaseHeaderStyles.headerBtn}
-          onPress={props.toggleEditMode()}>
-          {props.noteviewEditMode ? (
+          onPress={toggleEditMode()}>
+          {noteviewEditMode || headerType === 'newNote' ? (
             <Icon name="check-circle" size={22} color="#FFF" solid={true} />
           ) : (
             <Icon

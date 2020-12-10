@@ -56,6 +56,7 @@ class App extends React.Component {
           }}>
           <Screen name="Home" component={Screens.Home} />
           <Screen name="NoteView" component={Screens.NoteView} />
+          <Screen name="NewNote" component={Screens.NewNote} />
         </Navigator>
       </NavigationContainer>
     );

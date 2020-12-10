@@ -6,28 +6,42 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import BaseHeader from '../../components/common/BaseHeader';
 import {NoteViewStyles} from '../../components/NoteView/styles';
 import {getColorByTheme} from '../../assets/styles/Theme';
+import Colors from '../../assets/styles/Colors';
 
 const NoteView = ({route, navigation, notes, theme}) => {
-  const demoNote =
-    'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aspernatur commodi corporis dicta doloremque impedit in inventore laudantium magni, natus neque nobis nulla obcaecati officia pariatur possimus quos reprehenderit vel? \n\n Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aspernatur commodi corporis dicta doloremque impedit in inventore laudantium magni, natus neque nobis nulla obcaecati officia pariatur possimus quos reprehenderit vel? \n\n Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aspernatur commodi corporis dicta doloremque impedit in inventore laudantium magni, natus neque nobis nulla obcaecati officia pariatur possimus quos reprehenderit vel? \n\n Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aspernatur commodi corporis dicta doloremque impedit in inventore laudantium magni, natus neque nobis nulla obcaecati officia pariatur possimus quos reprehenderit vel?';
+  let noteTitleInput = null;
+  const months = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sept',
+    'Oct',
+    'Nov',
+    'Dec',
+  ];
+  const dateObj = new Date();
+  const formattedDate = `${
+    months[dateObj.getMonth()]
+  } ${dateObj.getDate()}, ${dateObj.getFullYear()}.`;
 
-  const note = notes.find((item) => item.id === route.params.id);
-  let titleInput = null;
-  let noteInput = null;
+  const [noteTitle, setNoteTitle] = useState('');
+  const [noteText, setNoteText] = useState('');
   const [editMode, setEditMode] = useState(false);
 
   useEffect(() => {
-    if (editMode) {
-      noteInput.focus();
-    }
-  });
+    noteTitleInput.focus();
+  }, [noteTitleInput]);
 
   const handleGoBack = () => {
     return navigation.goBack();
   };
 
   const toggleEditMode = () => {
-    console.log('hessy');
     setEditMode(!editMode);
   };
 
@@ -39,8 +53,8 @@ const NoteView = ({route, navigation, notes, theme}) => {
       ]}>
       <SafeAreaView>
         <BaseHeader
-          headerType="noteview"
           noteviewEditMode={editMode}
+          headerType="newNote"
           toggleEditMode={() => toggleEditMode}
           handleGoBack={handleGoBack}
         />
@@ -51,31 +65,32 @@ const NoteView = ({route, navigation, notes, theme}) => {
         indicatorStyle={getColorByTheme(theme, 'scrollIndicator')}>
         <View style={NoteViewStyles.content}>
           <TextInput
-            editable={editMode}
             multiline
             maxLength={64}
+            placeholder="Title"
+            value={noteTitle}
+            onChange={(e) => setNoteTitle(e.target.value)}
+            placeholderTextColor={theme === 'dark' ? Colors.gray_2 : null}
             ref={(input) => {
-              titleInput = input;
+              noteTitleInput = input;
             }}
             style={[
               NoteViewStyles.noteTitle,
               {color: getColorByTheme(theme, 'text')},
-            ]}>
-            {note.title}
-          </TextInput>
-          <Text style={NoteViewStyles.noteDate}>{note.date}</Text>
+            ]}
+          />
+          <Text style={NoteViewStyles.noteDate}>{formattedDate}</Text>
           <TextInput
-            editable={editMode}
             multiline
-            ref={(input) => {
-              noteInput = input;
-            }}
+            placeholder="What would you like to tell me about today?"
+            value={noteText}
+            onChange={(e) => setNoteText(e.target.value)}
+            placeholderTextColor={theme === 'dark' ? Colors.gray_2 : null}
             style={[
               NoteViewStyles.noteText,
               {color: getColorByTheme(theme, 'text')},
-            ]}>
-            {demoNote}
-          </TextInput>
+            ]}
+          />
         </View>
       </InputScrollView>
     </View>

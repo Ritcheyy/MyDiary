@@ -4,9 +4,9 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import {FabStyles} from './styles';
 import {perfectSize} from '../../utils/pixelPerfect';
 
-const Fab = () => {
+const Fab = ({handleFabPress}) => {
   return (
-    <TouchableOpacity style={FabStyles.btn}>
+    <TouchableOpacity style={FabStyles.btn} onPress={handleFabPress}>
       <Icon name="plus" size={perfectSize(23)} color="white" />
     </TouchableOpacity>
   );

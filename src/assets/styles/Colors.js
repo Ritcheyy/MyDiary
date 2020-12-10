@@ -8,6 +8,7 @@ export default {
   robRoy: '#dea44d',
   Indochine: '#9E5C32',
   gray: '#3B3B3B',
+  gray_2: '#929292',
   white: '#FFFFFF',
   black: '#252525',
   twin1: '#FFAB91',

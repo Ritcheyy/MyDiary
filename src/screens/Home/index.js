@@ -1,12 +1,13 @@
-import React from 'react';
-import {Text, View, ScrollView} from 'react-native';
+import React, {useEffect} from 'react';
+import {View, ScrollView} from 'react-native';
 import {connect} from 'react-redux';
+import {getAllNotes} from '../../database/NoteModel';
 import BaseHeader from '../../components/common/BaseHeader';
 import NoteCard from '../../components/Home/NoteCard';
 import Fab from '../../components/Home/Fab';
-
 import {HomeStyles} from '../../components/Home/styles';
 import {getColorByTheme} from '../../assets/styles/Theme';
+import realm from '../../database/NoteModel';
 
 let iterator = 0;
 const cardTypes = [
@@ -20,6 +21,18 @@ const cardTypes = [
 ];
 
 const Home = ({navigation, notes, theme}) => {
+  useEffect(() => {
+    console.log(realm.path);
+    getAllNotes().then((n) => {
+      console.log('hey');
+      console.log(n);
+    });
+  }, []);
+
+  const handleFabPress = () => {
+    navigation.navigate('NewNote');
+  };
+
   const handleNoteView = (id) => {
     navigation.navigate('NoteView', {id});
   };
@@ -30,7 +43,7 @@ const Home = ({navigation, notes, theme}) => {
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         indicatorStyle={getColorByTheme(theme, 'scrollIndicator')}>
-        <BaseHeader />
+        <BaseHeader headerType="home" />
 
         <View style={HomeStyles.cardsContainer}>
           {notes.map((note, index) => {
@@ -45,7 +58,7 @@ const Home = ({navigation, notes, theme}) => {
           })}
         </View>
       </ScrollView>
-      <Fab />
+      <Fab handleFabPress={handleFabPress} />
     </View>
   );
 };

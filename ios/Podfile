@@ -12,6 +12,8 @@ target 'MyDairy' do
 
 
 
+  pod 'RealmJS', :path => '../node_modules/realm'
+
   target 'MyDairyTests' do
     inherit! :complete
     # Pods for testing
