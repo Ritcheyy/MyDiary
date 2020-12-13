@@ -18,4 +18,5 @@ export default {
   rightLong: '#F48FB1',
   shortRight: '#CF93D9',
   shortLeft: '#80CBC4',
+  placeHolder: 'rgba(37, 37, 37, 0.25)',
 };

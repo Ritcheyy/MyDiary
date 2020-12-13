@@ -110,7 +110,9 @@ const NoteView = ({
             value={noteTitle}
             onChangeText={(value) => handleTitleInput(value)}
             placeholder="Title"
-            placeholderTextColor={theme === 'dark' ? Colors.gray_2 : null}
+            placeholderTextColor={
+              theme === 'dark' ? Colors.gray_2 : Colors.placeHolder
+            }
             ref={(input) => {
               titleInput = input;
             }}
@@ -128,7 +130,9 @@ const NoteView = ({
             value={noteText}
             onChangeText={(text) => handleContentInput(text)}
             placeholder="What would you like to tell me about today?"
-            placeholderTextColor={theme === 'dark' ? Colors.gray_2 : null}
+            placeholderTextColor={
+              theme === 'dark' ? Colors.gray_2 : Colors.placeHolder
+            }
             ref={(input) => {
               noteInput = input;
             }}
