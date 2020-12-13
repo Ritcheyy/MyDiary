@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
+import uuid from 'react-native-uuid';
 import {View, Text, TextInput} from 'react-native';
 import InputScrollView from 'react-native-input-scroll-view';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -8,29 +9,10 @@ import {NoteViewStyles} from '../../components/NoteView/styles';
 import {getColorByTheme} from '../../assets/styles/Theme';
 import Colors from '../../assets/styles/Colors';
 import {addNote} from '../../redux/actions/note';
-import uuid from 'react-native-uuid';
+import {formatDate} from '../../utils/helpers';
 
 const NoteView = ({navigation, theme, addNewNote}) => {
   let noteTitleInput = null;
-  const months = [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
-    'May',
-    'Jun',
-    'Jul',
-    'Aug',
-    'Sept',
-    'Oct',
-    'Nov',
-    'Dec',
-  ];
-  const dateObj = new Date();
-  const formattedDate = `${
-    months[dateObj.getMonth()]
-  } ${dateObj.getDate()}, ${dateObj.getFullYear()}`;
-
   const [noteTitle, setNoteTitle] = useState('');
   const [noteText, setNoteText] = useState('');
   const [hasTitle, setHasTitle] = useState(false);
@@ -60,7 +42,7 @@ const NoteView = ({navigation, theme, addNewNote}) => {
         content: noteText,
         date_created: new Date(),
       });
-      navigation.navigate('NoteView', {id});
+      navigation.navigate('Home');
     }
   };
 
@@ -114,7 +96,7 @@ const NoteView = ({navigation, theme, addNewNote}) => {
               {color: getColorByTheme(theme, 'text')},
             ]}
           />
-          <Text style={NoteViewStyles.noteDate}>{formattedDate}</Text>
+          <Text style={NoteViewStyles.noteDate}>{formatDate(new Date())}</Text>
           <TextInput
             multiline
             placeholder="What would you like to tell me about today?"

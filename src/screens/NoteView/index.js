@@ -7,11 +7,9 @@ import BaseHeader from '../../components/common/BaseHeader';
 import {NoteViewStyles} from '../../components/NoteView/styles';
 import {getColorByTheme} from '../../assets/styles/Theme';
 import {removeNote} from '../../redux/actions/note';
+import {formatDate} from '../../utils/helpers';
 
 const NoteView = ({route, navigation, notes, theme, removeNoteAction}) => {
-  const demoNote =
-    'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aspernatur commodi corporis dicta doloremque impedit in inventore laudantium magni, natus neque nobis nulla obcaecati officia pariatur possimus quos reprehenderit vel? \n\n Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aspernatur commodi corporis dicta doloremque impedit in inventore laudantium magni, natus neque nobis nulla obcaecati officia pariatur possimus quos reprehenderit vel? \n\n Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aspernatur commodi corporis dicta doloremque impedit in inventore laudantium magni, natus neque nobis nulla obcaecati officia pariatur possimus quos reprehenderit vel? \n\n Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aspernatur commodi corporis dicta doloremque impedit in inventore laudantium magni, natus neque nobis nulla obcaecati officia pariatur possimus quos reprehenderit vel?';
-
   const note = notes.find((item) => item.id === route.params.id);
   let titleInput = null;
   let noteInput = null;
@@ -69,7 +67,9 @@ const NoteView = ({route, navigation, notes, theme, removeNoteAction}) => {
             ]}>
             {note.title}
           </TextInput>
-          <Text style={NoteViewStyles.noteDate}>{note.date}</Text>
+          <Text style={NoteViewStyles.noteDate}>
+            {formatDate(note.date_created)}
+          </Text>
           <TextInput
             editable={editMode}
             multiline
@@ -80,7 +80,7 @@ const NoteView = ({route, navigation, notes, theme, removeNoteAction}) => {
               NoteViewStyles.noteText,
               {color: getColorByTheme(theme, 'text')},
             ]}>
-            {demoNote}
+            {note.content}
           </TextInput>
         </View>
       </InputScrollView>

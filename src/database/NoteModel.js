@@ -1,9 +1,9 @@
-import database from './index';
+import {database} from './index';
 
 // Schema Methods
 const getNotes = () =>
   new Promise((resolve, reject) => {
-    database
+    database()
       .then((realm) => {
         const allNotes = realm.objects('Note').sorted('date_created', true);
         resolve(allNotes);
@@ -15,7 +15,7 @@ const getNotes = () =>
 
 const createNote = (note) =>
   new Promise((resolve, reject) => {
-    database.then((realm) => {
+    database().then((realm) => {
       try {
         realm.write(() => {
           const res = realm.create('Note', note);
@@ -30,7 +30,7 @@ const createNote = (note) =>
 
 const deleteNote = (id) =>
   new Promise((resolve, reject) => {
-    database.then((realm) => {
+    database().then((realm) => {
       try {
         realm.write(() => {
           // realm.delete()

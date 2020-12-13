@@ -11,4 +11,5 @@ const database = () => {
   return new Realm.open(databaseOptions);
 };
 
-export default database();
+export {database};
+export default new Realm(databaseOptions);

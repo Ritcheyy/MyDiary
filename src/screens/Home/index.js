@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import {View, ScrollView} from 'react-native';
 import {connect} from 'react-redux';
+import realm from '../../database';
 import BaseHeader from '../../components/common/BaseHeader';
 import NoteCard from '../../components/Home/NoteCard';
 import Fab from '../../components/Home/Fab';
@@ -22,18 +23,16 @@ const cardTypes = [
 const Home = ({navigation, notes, theme, getNotes}) => {
   // Mounted
   useEffect(() => {
-    console.log('mounted');
     getNotes();
+    realm.addListener('change', () => {
+      getNotes();
+    });
   }, []);
 
   // Updated
   useEffect(() => {
     iterator = 0;
   });
-
-  // useEffect(() => {
-  //   //
-  // }, [notes]);
 
   const handleFabPress = () => {
     navigation.navigate('NewNote');
@@ -59,7 +58,11 @@ const Home = ({navigation, notes, theme, getNotes}) => {
               iterator = 0;
             }
             return (
-              <NoteCard note={note} key={note.id} viewNote={handleNoteView} />
+              <NoteCard
+                note={note}
+                key={note.id}
+                viewNote={() => handleNoteView(note.id)}
+              />
             );
           })}
         </View>

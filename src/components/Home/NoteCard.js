@@ -1,31 +1,13 @@
 import React from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {Text, TouchableOpacity} from 'react-native';
 import {NoteCardStyles} from './styles';
+import {formatDate} from '../../utils/helpers';
 
 const NoteCard = ({note, viewNote}) => {
-  const months = [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
-    'May',
-    'Jun',
-    'Jul',
-    'Aug',
-    'Sept',
-    'Oct',
-    'Nov',
-    'Dec',
-  ];
-  const dateObj = note.date_created;
-  const formattedDate = `${
-    months[dateObj.getMonth()]
-  } ${dateObj.getDate()}, ${dateObj.getFullYear()}`;
-
   return (
     <>
       <TouchableOpacity
-        onPress={() => viewNote(note.id)}
+        onPress={viewNote}
         style={[NoteCardStyles.noteCard, NoteCardStyles[note.cardType]]}>
         <Text
           numberOfLines={20}
@@ -44,7 +26,7 @@ const NoteCard = ({note, viewNote}) => {
               ? NoteCardStyles.wideDate
               : NoteCardStyles.date
           }>
-          {formattedDate}
+          {formatDate(note.date_created)}
         </Text>
       </TouchableOpacity>
     </>
