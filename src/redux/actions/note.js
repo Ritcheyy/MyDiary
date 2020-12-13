@@ -1,5 +1,10 @@
-import {FETCH_NOTES, ADD_NOTE, REMOVE_NOTE} from '../actionTypes';
-import {getNotes, createNote, deleteNote} from '../../database/NoteModel';
+import {FETCH_NOTES, ADD_NOTE, EDIT_NOTE, REMOVE_NOTE} from '../actionTypes';
+import {
+  getNotes,
+  createNote,
+  updateNote,
+  deleteNote,
+} from '../../database/NoteModel';
 
 export const fetchNotes = () => (dispatch) => {
   return getNotes()
@@ -19,6 +24,19 @@ export const addNote = (note) => (dispatch) => {
     .then((res) => {
       return dispatch({
         type: ADD_NOTE,
+        payload: res,
+      });
+    })
+    .catch((error) => {
+      return error;
+    });
+};
+
+export const editNote = (note) => (dispatch) => {
+  return updateNote(note)
+    .then((res) => {
+      return dispatch({
+        type: EDIT_NOTE,
         payload: res,
       });
     })

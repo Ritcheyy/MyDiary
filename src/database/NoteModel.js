@@ -28,6 +28,22 @@ const createNote = (note) =>
     });
   });
 
+const updateNote = (note) =>
+  new Promise((resolve, reject) => {
+    database().then((realm) => {
+      try {
+        realm.write(() => {
+          console.log('written');
+          const res = realm.create('Note', note, true);
+          resolve(res);
+        });
+      } catch (e) {
+        console.log(e);
+        reject();
+      }
+    });
+  });
+
 const deleteNote = (id) =>
   new Promise((resolve, reject) => {
     database().then((realm) => {
@@ -45,4 +61,4 @@ const deleteNote = (id) =>
     });
   });
 
-export {getNotes, createNote, deleteNote};
+export {getNotes, createNote, updateNote, deleteNote};
