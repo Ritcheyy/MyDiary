@@ -1,29 +1,11 @@
-import Realm from 'realm';
-
-const NoteSchema = {
-  name: 'Note',
-  primaryKey: 'id',
-  properties: {
-    id: 'int',
-    title: {type: 'string', indexed: true},
-    text: 'string',
-    attachment: {type: 'data', optional: true},
-    date_created: 'date',
-  },
-};
-
-const databaseOptions = {
-  path: 'myDiaryApp.realm',
-  schema: [NoteSchema],
-  schemaVersion: 0,
-};
+import database from './index';
 
 // Schema Methods
-const getAllNotes = () =>
+const getNotes = () =>
   new Promise((resolve, reject) => {
-    Realm.open(databaseOptions)
+    database
       .then((realm) => {
-        const allNotes = realm.objects('Note');
+        const allNotes = realm.objects('Note').sorted('date_created', true);
         resolve(allNotes);
       })
       .catch((error) => {
@@ -31,5 +13,36 @@ const getAllNotes = () =>
       });
   });
 
-export {getAllNotes};
-export default new Realm(databaseOptions);
+const createNote = (note) =>
+  new Promise((resolve, reject) => {
+    database.then((realm) => {
+      try {
+        realm.write(() => {
+          const res = realm.create('Note', note);
+          resolve(res);
+        });
+      } catch (e) {
+        console.log(e);
+        reject();
+      }
+    });
+  });
+
+const deleteNote = (id) =>
+  new Promise((resolve, reject) => {
+    database.then((realm) => {
+      try {
+        realm.write(() => {
+          // realm.delete()
+          let deletingNote = realm.objectForPrimaryKey('Note', id);
+          realm.delete(deletingNote);
+          resolve();
+        });
+      } catch (e) {
+        console.log(e);
+        reject();
+      }
+    });
+  });
+
+export {getNotes, createNote, deleteNote};

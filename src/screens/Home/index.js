@@ -1,13 +1,12 @@
 import React, {useEffect} from 'react';
 import {View, ScrollView} from 'react-native';
 import {connect} from 'react-redux';
-import {getAllNotes} from '../../database/NoteModel';
 import BaseHeader from '../../components/common/BaseHeader';
 import NoteCard from '../../components/Home/NoteCard';
 import Fab from '../../components/Home/Fab';
 import {HomeStyles} from '../../components/Home/styles';
 import {getColorByTheme} from '../../assets/styles/Theme';
-import realm from '../../database/NoteModel';
+import {fetchNotes} from '../../redux/actions/note';
 
 let iterator = 0;
 const cardTypes = [
@@ -20,14 +19,21 @@ const cardTypes = [
   'rightLong',
 ];
 
-const Home = ({navigation, notes, theme}) => {
+const Home = ({navigation, notes, theme, getNotes}) => {
+  // Mounted
   useEffect(() => {
-    console.log(realm.path);
-    getAllNotes().then((n) => {
-      console.log('hey');
-      console.log(n);
-    });
+    console.log('mounted');
+    getNotes();
   }, []);
+
+  // Updated
+  useEffect(() => {
+    iterator = 0;
+  });
+
+  // useEffect(() => {
+  //   //
+  // }, [notes]);
 
   const handleFabPress = () => {
     navigation.navigate('NewNote');
@@ -68,4 +74,8 @@ const mapStateToProps = (state) => ({
   theme: state.themeReducer.theme,
 });
 
-export default connect(mapStateToProps)(Home);
+const mapDispatchToProps = {
+  getNotes: fetchNotes,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

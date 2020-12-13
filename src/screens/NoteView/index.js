@@ -6,8 +6,9 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import BaseHeader from '../../components/common/BaseHeader';
 import {NoteViewStyles} from '../../components/NoteView/styles';
 import {getColorByTheme} from '../../assets/styles/Theme';
+import {removeNote} from '../../redux/actions/note';
 
-const NoteView = ({route, navigation, notes, theme}) => {
+const NoteView = ({route, navigation, notes, theme, removeNoteAction}) => {
   const demoNote =
     'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aspernatur commodi corporis dicta doloremque impedit in inventore laudantium magni, natus neque nobis nulla obcaecati officia pariatur possimus quos reprehenderit vel? \n\n Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aspernatur commodi corporis dicta doloremque impedit in inventore laudantium magni, natus neque nobis nulla obcaecati officia pariatur possimus quos reprehenderit vel? \n\n Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aspernatur commodi corporis dicta doloremque impedit in inventore laudantium magni, natus neque nobis nulla obcaecati officia pariatur possimus quos reprehenderit vel? \n\n Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aspernatur commodi corporis dicta doloremque impedit in inventore laudantium magni, natus neque nobis nulla obcaecati officia pariatur possimus quos reprehenderit vel?';
 
@@ -23,12 +24,16 @@ const NoteView = ({route, navigation, notes, theme}) => {
   });
 
   const handleGoBack = () => {
-    return navigation.goBack();
+    return navigation.navigate('Home');
   };
 
   const toggleEditMode = () => {
-    console.log('hessy');
     setEditMode(!editMode);
+  };
+
+  const deleteNote = () => {
+    removeNoteAction(note.id);
+    handleGoBack();
   };
 
   return (
@@ -42,7 +47,8 @@ const NoteView = ({route, navigation, notes, theme}) => {
           headerType="noteview"
           noteviewEditMode={editMode}
           toggleEditMode={() => toggleEditMode}
-          handleGoBack={handleGoBack}
+          handleGoBack={() => handleGoBack}
+          deleteNote={() => deleteNote}
         />
       </SafeAreaView>
 
@@ -87,4 +93,8 @@ const mapStateToProps = (state) => ({
   theme: state.themeReducer.theme,
 });
 
-export default connect(mapStateToProps)(NoteView);
+const mapDispatchToProps = {
+  removeNoteAction: removeNote,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(NoteView);

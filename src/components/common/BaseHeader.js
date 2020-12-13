@@ -14,6 +14,8 @@ const BaseHeader = ({
   handleGoBack,
   toggleTheme,
   toggleEditMode,
+  saveNote,
+  deleteNote,
 }) => {
   const handleThemeToggle = () => {
     let newTheme = theme === 'dark' ? 'light' : 'dark';
@@ -45,7 +47,7 @@ const BaseHeader = ({
       ) : (
         <TouchableOpacity
           style={BaseHeaderStyles.headerBtn}
-          onPress={() => handleGoBack()}>
+          onPress={handleGoBack()}>
           <Icon name="angle-left" size={22} color="#FFF" />
         </TouchableOpacity>
       )}
@@ -56,22 +58,37 @@ const BaseHeader = ({
           onPress={handleThemeToggle}>
           <Icon name="moon" size={22} color="#FFF" solid={isDarkTheme} />
         </TouchableOpacity>
-      ) : (
+      ) : null}
+      {headerType === 'noteview' ? (
+        <View style={{flexDirection: 'row'}}>
+          <TouchableOpacity
+            style={BaseHeaderStyles.headerBtn}
+            onPress={toggleEditMode()}>
+            {noteviewEditMode ? (
+              <Icon name="check-circle" size={22} color="#FFF" solid={true} />
+            ) : (
+              <Icon
+                name="edit"
+                size={18}
+                color="#FFF"
+                style={BaseHeaderStyles.editIcon}
+              />
+            )}
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[BaseHeaderStyles.headerBtn, {marginLeft: 15}]}
+            onPress={deleteNote()}>
+            <Icon name="times-circle" size={22} color="#FFF" />
+          </TouchableOpacity>
+        </View>
+      ) : null}
+      {headerType === 'newNote' ? (
         <TouchableOpacity
           style={BaseHeaderStyles.headerBtn}
-          onPress={toggleEditMode()}>
-          {noteviewEditMode || headerType === 'newNote' ? (
-            <Icon name="check-circle" size={22} color="#FFF" solid={true} />
-          ) : (
-            <Icon
-              name="edit"
-              size={18}
-              color="#FFF"
-              style={BaseHeaderStyles.editIcon}
-            />
-          )}
+          onPress={saveNote()}>
+          <Icon name="check-circle" size={22} color="#FFF" solid={true} />
         </TouchableOpacity>
-      )}
+      ) : null}
     </View>
   );
 };
